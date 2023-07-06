@@ -1,0 +1,19 @@
+version: '3'
+services:
+  jal_logger:
+    build: ./jal_logger
+    depends_on:
+      - postgres
+    volumes:
+      - ./jal_logger/log:/var/log/cron
+
+  postgres:
+    image: postgres:alpine
+    restart: always
+    volumes:
+      - ./postgres/init:/docker-entrypoint-initdb.d
+      - ./postgres/data:/var/lib/postgresql/data
+    env_file:
+      - ./postgres/.env
+    ports:
+      - ${POSTGRES_PORT}:5432
