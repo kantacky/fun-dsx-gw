@@ -10,7 +10,7 @@ COPY . /
 RUN pip install -U pip
 RUN pip install -Ur requirements.txt
 
-RUN echo '15 * * * * root' $(which python) '/app/__main__.py >> /var/log/cron/weather.log' >> /etc/cron.d/cron
+RUN echo '*/5 * * * * root' $(which python) '/app/__main__.py >> /var/log/cron/weather.log' >> /etc/cron.d/cron
 RUN chmod 644 /etc/cron.d/*
 
 CMD cron && tail -f /dev/null
